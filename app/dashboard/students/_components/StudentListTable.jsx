@@ -24,7 +24,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 const pagination = true;
 
 // sets 10 rows per page (default is 100)
-const paginationPageSize = 10;
+const paginationPageSize = 100;
 
 // allows the user to select the page size from a predefined list of page sizes
 const paginationPageSizeSelector = [20, 50, 100];
@@ -98,7 +98,7 @@ function StudentListTable({ studentList, refreshData }) {
   }
   return (
 
-    <div className="my-7" style={{ height: 500, width: "100%" }}>
+    <div className="my-7" style={{ height: 800, width: "100%" }}>
 
       <div className="p-2 rounded-lg border shadow-sm flex gap-2 mb-4 max-w-sm">
         <Search />

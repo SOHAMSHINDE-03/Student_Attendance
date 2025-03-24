@@ -16,8 +16,15 @@ function Dashboard() {
     const [attendanceList,setAttendanceList] = useState();
     
     useEffect(()=>{
-        setTheme('dark');
+      setTheme('dark');
+      
+      
+  },[])  
+
+    useEffect(()=>{
+       
         getStudentAttendance();
+        GetTotalPresentCountByDay();
         
     },[selectedMonth||selectedGrade])  
 
@@ -25,7 +32,15 @@ function Dashboard() {
     GlobalApi.GetAttendanceList(selectedGrade,moment(selectedMonth).format('MM/YYYY'))
     .then(resp=>{
       console.log(resp)
-      setAttendanceList(resp)
+      setAttendanceList(resp.data)
+    })
+  }
+
+  const GetTotalPresentCountByDay=()=>{
+    GlobalApi.TotalPresentCountByDay(moment(selectedMonth).format('MM/YYYY'),selectedGrade)
+    .then(resp=>{
+      console.log(resp.data);
+      
     })
   }
 
