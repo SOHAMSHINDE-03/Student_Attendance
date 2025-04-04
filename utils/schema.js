@@ -16,7 +16,7 @@ export const STUDENT = mysqlTable('students', {
 export const ATTENDANCE = mysqlTable('attendance', {
     id: int('id', { length: 11 }).autoincrement().primaryKey(),
     studentId: varchar('studentid', { length: 20 }).notNull(),
-    present: boolean('present', { width: 1 }).default(0),  
+    present: boolean('present').default(false),  
     day: int('day', { length: 11 }).notNull(),
     date: varchar('date', { length: 20 }).notNull()
 });

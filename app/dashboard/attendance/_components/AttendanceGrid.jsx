@@ -38,34 +38,47 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
     if (attendanceList?.length > 0) {
       const uniqueUserList = getUniqueRecord(attendanceList);
       setRowData(uniqueUserList); // Ensures unique students
-  
-      // Generate days dynamically only once
-      const updatedDaysArray = Array.from({ length: numberofDays }, (_, i) => i + 1);
-      setColDef([
-        { field: "studentId", filter: true },
-        { field: "name", filter: true },
-        ...updatedDaysArray.map((date) => ({
+
+      setColDef((prevColDef) => [
+        ...prevColDef,
+        ...daysArrays.map((date) => ({
           field: date.toString(),
           width: 50,
           editable: true,
         })),
       ]);
-  
+
       // Update attendance status
-      setRowData(
-        uniqueUserList.map((student) => ({
-          ...student,
-          ...Object.fromEntries(updatedDaysArray.map((day) => [day, isPresent(student.studentId, day)])),
-        }))
+      setRowData((prevRowData) =>
+        prevRowData.map((student) => {
+          const updatedStudent = { ...student };
+          daysArrays.forEach((day) => {
+            updatedStudent[day] = isPresent(student.studentId, day);
+          });
+          return updatedStudent;
+        })
       );
     }
-  }, [attendanceList, selectedMonth]); // <-- Ensures reloading when month or list updates
+  }, [attendanceList]);
 
   const isPresent = (studentId, day) => {
     return attendanceList.some((item) => item.day == day && item.studentId == studentId);
   };
 
-  
+  const onMarkAttendance = (day, studentId, presentStatus) => {
+    const date = moment(selectedMonth).format("MM/YYYY");
+    if (presentStatus) {
+      const data = { day, studentId, present: presentStatus, date };
+      GlobalApi.MarkAttendence(data).then(() => {
+        toast("StudentID:" +studentId+ "Marked as present");
+      });
+    } else {
+      GlobalApi.MarkAbsent(studentId, day, date).then(() => {
+        toast("StudentID:" +studentId+ "Marked as absent");
+      });
+    }
+  };
+
   return (
     <div>
       <div style={{ height: 800 }}>

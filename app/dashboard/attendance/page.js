@@ -4,14 +4,16 @@ import MonthSelection from '@/app/_components/MonthSelection'
 import GlobalApi from '@/app/_services/GlobalApi'
 import { Button } from '@/components/ui/button'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import AttendanceGrid from './_components/AttendanceGrid'
 
 function Attendance() {
   const [selectedMonth,setselectedMonth] = useState();
 
-  const[selectedGrade,setselectedGrade] = useState();
+  const[selectedGrade,setselectedGrade] = useState('1');
   const[attendanceList,setAttendanceList] = useState();
+  
+  
 
   const onSearchHandler = ()=>{
     console.log(selectedMonth,selectedGrade)

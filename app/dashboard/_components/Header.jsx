@@ -11,8 +11,9 @@ import React from 'react'
       
      <div className='p-4 shadow-sm border flex justify-end '>
       
-      <div >
-    
+      <div>
+        
+       
       <div>
       {user?.picture ? (
       <Image 
@@ -27,6 +28,8 @@ import React from 'react'
           
         </div>
       </div>
+
+      
      
      
    )
